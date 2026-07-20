@@ -65,3 +65,29 @@ export const ADMIN_NAVIGATION = [
         icon: Settings,
     },
 ];
+
+export const SHOP_NAVIGATION = [
+    {
+        title: "Boutique",
+
+        href: ROUTES.SHOP,
+    },
+
+    {
+        title: "Promotions",
+
+        href: `${ROUTES.PRODUCTS}?promo=1`,
+    },
+
+    {
+        title: "À propos",
+
+        href: ROUTES.ABOUT,
+    },
+
+    {
+        title: "Contact",
+
+        href: ROUTES.CONTACT,
+    },
+];

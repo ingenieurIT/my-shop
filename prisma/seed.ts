@@ -39,6 +39,41 @@ async function main() {
     });
 
     // ==========================
+    // CATÉGORIES
+    // ==========================
+
+    const categories = [
+        { name: "Ordinateurs portables", slug: "laptop" },
+        { name: "Ordinateurs de bureau", slug: "desktop" },
+        { name: "Gaming", slug: "gaming" },
+        { name: "Moniteurs", slug: "monitor" },
+        { name: "Accessoires", slug: "accessories" },
+        { name: "Réseau", slug: "network" },
+    ];
+
+    for (const category of categories) {
+        await prisma.category.upsert({
+            where: { slug: category.slug },
+            update: {},
+            create: category,
+        });
+    }
+
+    // ==========================
+    // MARQUES
+    // ==========================
+
+    const brands = ["HP", "Dell", "Asus", "Acer", "Lenovo"];
+
+    for (const name of brands) {
+        const existing = await prisma.brand.findFirst({ where: { name } });
+
+        if (!existing) {
+            await prisma.brand.create({ data: { name } });
+        }
+    }
+
+    // ==========================
     // ADMIN
     // ==========================
 

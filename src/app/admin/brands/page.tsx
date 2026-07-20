@@ -1,6 +1,10 @@
 import { Container, PageTitle } from "@/components/layout/admin";
+import { BrandsManager } from "@/components/admin/brands/BrandsManager";
+import { getBrands } from "@/services/brand.service";
 
-export default function AdminBrandsPage() {
+export default async function AdminBrandsPage() {
+    const brands = await getBrands();
+
     return (
         <Container>
             <PageTitle
@@ -8,9 +12,7 @@ export default function AdminBrandsPage() {
                 description="Gérez les marques disponibles."
             />
 
-            <div className="rounded-xl border border-zinc-200 bg-white p-10 text-center text-sm text-zinc-500 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400">
-                Aucune marque pour le moment.
-            </div>
+            <BrandsManager brands={brands} />
         </Container>
     );
 }

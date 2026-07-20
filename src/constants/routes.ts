@@ -23,5 +23,11 @@ export const ROUTES = {
 
     ADMIN_SETTINGS: "/admin/settings",
 
+    ABOUT: "/about",
+
+    CONTACT: "/contact",
+
+    CART: "/cart",
+
     LOGIN: "/login",
 } as const;

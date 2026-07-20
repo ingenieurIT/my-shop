@@ -14,6 +14,9 @@ export const APP = {
 
     DEFAULT_STORE: "glc",
 
+    // TODO: remplacer par le vrai numéro WhatsApp du vendeur (format E.164 sans +)
+    WHATSAPP_NUMBER: "237600000000",
+
     MAX_IMAGES_PER_PRODUCT: 10,
 
     MAX_SPECIFICATIONS: 30,

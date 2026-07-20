@@ -1,6 +1,10 @@
 import { Container, PageTitle } from "@/components/layout/admin";
+import { StoresManager } from "@/components/admin/stores/StoresManager";
+import { getStores } from "@/services/store.service";
 
-export default function AdminStoresPage() {
+export default async function AdminStoresPage() {
+    const stores = await getStores();
+
     return (
         <Container>
             <PageTitle
@@ -8,9 +12,7 @@ export default function AdminStoresPage() {
                 description="Gérez vos boutiques GLC et ELS."
             />
 
-            <div className="rounded-xl border border-zinc-200 bg-white p-10 text-center text-sm text-zinc-500 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400">
-                Aucune boutique pour le moment.
-            </div>
+            <StoresManager stores={stores} />
         </Container>
     );
 }
