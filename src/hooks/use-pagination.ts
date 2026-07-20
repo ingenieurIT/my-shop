@@ -1,0 +1,31 @@
+"use client";
+
+import { useState } from "react";
+
+export function usePagination(
+    initialPage = 1,
+    initialPageSize = 20
+) {
+    const [page, setPage] =
+        useState(initialPage);
+
+    const [pageSize, setPageSize] =
+        useState(initialPageSize);
+
+    const next = () => setPage((p) => p + 1);
+
+    const previous = () =>
+        setPage((p) => Math.max(1, p - 1));
+
+    const reset = () => setPage(1);
+
+    return {
+        page,
+        pageSize,
+        setPage,
+        setPageSize,
+        next,
+        previous,
+        reset,
+    };
+}
