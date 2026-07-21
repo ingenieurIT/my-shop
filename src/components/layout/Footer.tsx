@@ -130,7 +130,7 @@ export function Footer() {
                     </span>
 
                     <span>
-                        Boutiques GLC &amp; ELS
+                        LinkIT Deal
                     </span>
                 </Container>
             </div>

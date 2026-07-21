@@ -2,7 +2,7 @@ export const APP = {
     NAME: "LinkIT Deal",
 
     DESCRIPTION:
-        "Gestion centralisée des boutiques GLC et ELS",
+        "Gestion centralisée des boutiques d'offre de services",
 
     VERSION: "1.0.0",
 

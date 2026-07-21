@@ -9,7 +9,7 @@ export default async function AdminStoresPage() {
         <Container>
             <PageTitle
                 title="Boutiques"
-                description="Gérez vos boutiques GLC et ELS."
+                description="Gérez vos boutiques"
             />
 
             <StoresManager stores={stores} />

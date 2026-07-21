@@ -95,10 +95,10 @@ export async function ProductCatalogSection({
                     <Container className="flex flex-wrap items-center gap-x-6 gap-y-1 text-sm text-zinc-500 dark:text-zinc-400">
                         {store.logo && (
                             <Image
-                                src={store.logo}
+                                src={`/api/image-proxy?url=${encodeURIComponent(store.logo)}`}
                                 alt={store.name}
-                                width={32}
-                                height={32}
+                                width={35}
+                                height={35}
                                 className="rounded-full object-cover"
                             />
                         )}
