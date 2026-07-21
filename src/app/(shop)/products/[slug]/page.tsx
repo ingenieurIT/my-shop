@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import { MessageCircle } from "lucide-react";
 
@@ -37,13 +36,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
             <Container className="grid grid-cols-1 gap-10 py-8 lg:grid-cols-2">
                 <div className="relative aspect-4/3 w-full overflow-hidden rounded-xl bg-zinc-100 dark:bg-zinc-800">
-                    <Image
+                    {/* eslint-disable-next-line @next/next/no-img-element -- arbitrary admin-pasted URL, not an allowlisted domain */}
+                    <img
                         src={image}
                         alt={product.images[0]?.alt || product.name}
-                        fill
-                        priority
-                        sizes="(max-width: 1024px) 100vw, 50vw"
-                        className="object-cover"
+                        className="absolute inset-0 h-full w-full object-cover"
                     />
                 </div>
 

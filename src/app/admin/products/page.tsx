@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { Plus } from "lucide-react";
 
@@ -80,14 +79,13 @@ export default async function AdminProductsPage() {
                                 <TableRow key={product.id}>
                                     <TableCell>
                                         <div className="flex items-center gap-3">
-                                            <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-lg bg-zinc-100 dark:bg-zinc-800">
+                                            <div className="h-10 w-10 shrink-0 overflow-hidden rounded-lg bg-zinc-100 dark:bg-zinc-800">
                                                 {cover && (
-                                                    <Image
+                                                    // eslint-disable-next-line @next/next/no-img-element -- arbitrary admin-pasted URL, not an allowlisted domain
+                                                    <img
                                                         src={cover.imageUrl}
                                                         alt={cover.alt ?? product.name}
-                                                        fill
-                                                        sizes="40px"
-                                                        className="object-cover"
+                                                        className="h-full w-full object-cover"
                                                     />
                                                 )}
                                             </div>
