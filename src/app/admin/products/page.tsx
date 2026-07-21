@@ -3,6 +3,7 @@ import { Plus } from "lucide-react";
 
 import { Container, PageTitle } from "@/components/layout/admin";
 import { ProductRowActions } from "@/components/admin/products/ProductRowActions";
+import { ExportCatalogButton } from "@/components/admin/export/ExportCatalogButton";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -17,6 +18,7 @@ import { ROUTES } from "@/constants/routes";
 import { PRODUCT_STATUS } from "@/constants/status";
 import { formatPrice } from "@/lib/format";
 import { getProducts } from "@/services/product.service";
+import { getStores } from "@/services/store.service";
 
 const STATUS_VARIANT: Record<string, "default" | "secondary" | "destructive"> = {
     AVAILABLE: "default",
@@ -25,7 +27,10 @@ const STATUS_VARIANT: Record<string, "default" | "secondary" | "destructive"> = 
 };
 
 export default async function AdminProductsPage() {
-    const products = await getProducts();
+    const [products, stores] = await Promise.all([
+        getProducts(),
+        getStores(),
+    ]);
 
     return (
         <Container>
@@ -33,14 +38,18 @@ export default async function AdminProductsPage() {
                 title="Produits"
                 description="Gérez le catalogue de produits."
                 actions={
-                    <Button
-                        render={<Link href={ROUTES.ADMIN_PRODUCTS_CREATE} />}
-                        nativeButton={false}
-                        className="gap-1.5 bg-teal-600 text-white hover:bg-teal-700 dark:bg-teal-600 dark:hover:bg-teal-500"
-                    >
-                        <Plus className="h-4 w-4" />
-                        Ajouter un produit
-                    </Button>
+                    <div className="flex items-center gap-2">
+                        <ExportCatalogButton products={products} stores={stores} />
+
+                        <Button
+                            render={<Link href={ROUTES.ADMIN_PRODUCTS_CREATE} />}
+                            nativeButton={false}
+                            className="gap-1.5 bg-teal-600 text-white hover:bg-teal-700 dark:bg-teal-600 dark:hover:bg-teal-500"
+                        >
+                            <Plus className="h-4 w-4" />
+                            Ajouter un produit
+                        </Button>
+                    </div>
                 }
             />
 
@@ -115,10 +124,7 @@ export default async function AdminProductsPage() {
                                     </TableCell>
 
                                     <TableCell className="text-right">
-                                        <ProductRowActions
-                                            productId={product.id}
-                                            productName={product.name}
-                                        />
+                                        <ProductRowActions product={product} />
                                     </TableCell>
                                 </TableRow>
                             );

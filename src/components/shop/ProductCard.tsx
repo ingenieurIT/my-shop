@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { MessageCircle } from "lucide-react";
+import { MessageCircle, Store } from "lucide-react";
 
 import { ROUTES } from "@/constants/routes";
 import { formatPrice } from "@/lib/format";
@@ -22,18 +22,28 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
 
     return (
         <div className="group flex flex-col overflow-hidden rounded-xl border border-zinc-200 bg-white transition-shadow hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900">
-            <Link
-                href={`${ROUTES.PRODUCTS}/${product.slug}`}
-                className="relative aspect-4/3 w-full overflow-hidden bg-zinc-100 dark:bg-zinc-800"
-            >
-                {/* eslint-disable-next-line @next/next/no-img-element -- arbitrary admin-pasted URL, not an allowlisted domain */}
-                <img
-                    src={image}
-                    alt={product.images[0]?.alt || product.name}
-                    loading={priority ? "eager" : "lazy"}
-                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                />
-            </Link>
+            <div className="relative aspect-4/3 w-full overflow-hidden bg-zinc-100 dark:bg-zinc-800">
+                <Link
+                    href={`${ROUTES.PRODUCTS}/${product.slug}`}
+                    className="absolute inset-0"
+                >
+                    {/* eslint-disable-next-line @next/next/no-img-element -- arbitrary admin-pasted URL, not an allowlisted domain */}
+                    <img
+                        src={image}
+                        alt={product.images[0]?.alt || product.name}
+                        loading={priority ? "eager" : "lazy"}
+                        className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                </Link>
+
+                <Link
+                    href={`${ROUTES.STORES}/${product.store.slug}`}
+                    className="absolute left-2 top-2 z-10 flex items-center gap-1 rounded-full bg-white/95 px-2 py-1 text-[11px] font-medium text-zinc-700 shadow-sm backdrop-blur-sm transition-colors hover:text-teal-600 dark:bg-zinc-900/90 dark:text-zinc-300 dark:hover:text-teal-400"
+                >
+                    <Store className="h-3 w-3" />
+                    {product.store.name}
+                </Link>
+            </div>
 
             <div className="flex flex-1 flex-col gap-3 p-4">
                 <Link href={`${ROUTES.PRODUCTS}/${product.slug}`}>

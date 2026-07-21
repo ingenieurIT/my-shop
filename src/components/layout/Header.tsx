@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { Menu, Search, ShoppingCart, User } from "lucide-react";
 
 import { ROUTES } from "@/constants/routes";
@@ -22,6 +22,7 @@ import { Container } from "./Container";
 
 export function Header() {
     const pathname = usePathname();
+    const searchParams = useSearchParams();
     const [open, setOpen] = useState(false);
 
     return (
@@ -60,18 +61,24 @@ export function Header() {
                     })}
                 </nav>
 
-                <div className="ml-auto hidden max-w-xs flex-1 items-center sm:flex">
+                <form
+                    action={ROUTES.PRODUCTS}
+                    className="ml-auto hidden max-w-xs flex-1 items-center sm:flex"
+                >
                     <div className="relative w-full">
                         <Search className="pointer-events-none absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400" />
                         <Input
                             id="header-search-desktop"
                             suppressHydrationWarning
                             type="search"
+                            name="search"
+                            key={searchParams.get("search") ?? ""}
+                            defaultValue={searchParams.get("search") ?? ""}
                             placeholder="Rechercher un produit..."
                             className="h-9 pl-8"
                         />
                     </div>
-                </div>
+                </form>
 
                 <div className="ml-auto flex items-center gap-1 sm:ml-0">
                     <ThemeToggle />

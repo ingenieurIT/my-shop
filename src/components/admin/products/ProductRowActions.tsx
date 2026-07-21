@@ -6,6 +6,7 @@ import { Pencil, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
 import { deleteProductAction } from "@/actions/product.actions";
+import type { Product } from "@/types/product";
 import { Button } from "@/components/ui/button";
 import {
     AlertDialog,
@@ -17,22 +18,19 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { ExportProductButton } from "@/components/admin/export/ExportProductButton";
 
 type ProductRowActionsProps = {
-    productId: string;
-    productName: string;
+    product: Product;
 };
 
-export function ProductRowActions({
-    productId,
-    productName,
-}: ProductRowActionsProps) {
+export function ProductRowActions({ product }: ProductRowActionsProps) {
     const [open, setOpen] = useState(false);
     const [isPending, startTransition] = useTransition();
 
     function handleDelete() {
         startTransition(async () => {
-            const result = await deleteProductAction(productId);
+            const result = await deleteProductAction(product.id);
 
             if (result.success) {
                 toast.success(result.message);
@@ -46,11 +44,13 @@ export function ProductRowActions({
 
     return (
         <div className="flex justify-end gap-1">
+            <ExportProductButton product={product} />
+
             <Button
                 variant="ghost"
                 size="icon-sm"
                 aria-label="Modifier"
-                render={<Link href={`/admin/products/${productId}`} />}
+                render={<Link href={`/admin/products/${product.id}`} />}
                 nativeButton={false}
             >
                 <Pencil className="h-4 w-4" />
@@ -72,7 +72,7 @@ export function ProductRowActions({
                     <AlertDialogHeader>
                         <AlertDialogTitle>Supprimer ce produit ?</AlertDialogTitle>
                         <AlertDialogDescription>
-                            « {productName} » sera définitivement supprimé. Cette action
+                            « {product.name} » sera définitivement supprimé. Cette action
                             est irréversible.
                         </AlertDialogDescription>
                     </AlertDialogHeader>

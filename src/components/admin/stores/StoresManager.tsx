@@ -2,9 +2,10 @@
 
 import { useState, useTransition } from "react";
 import type { Store } from "@prisma/client";
-import { Pencil, Plus, Trash2 } from "lucide-react";
+import { Copy, Pencil, Plus, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
+import { ROUTES } from "@/constants/routes";
 import { slugify } from "@/lib/slug";
 import {
     createStoreAction,
@@ -115,6 +116,15 @@ export function StoresManager({ stores }: StoresManagerProps) {
         });
     }
 
+    function copyStoreLink(store: Store) {
+        const url = `${window.location.origin}${ROUTES.STORES}/${store.slug}`;
+
+        navigator.clipboard.writeText(url).then(
+            () => toast.success("Lien de la boutique copié"),
+            () => toast.error("Impossible de copier le lien")
+        );
+    }
+
     function handleDelete() {
         if (!deleteTarget) return;
 
@@ -152,6 +162,7 @@ export function StoresManager({ stores }: StoresManagerProps) {
                             <TableHead>Ville</TableHead>
                             <TableHead>Téléphone</TableHead>
                             <TableHead>Email</TableHead>
+                            <TableHead>Lien public</TableHead>
                             <TableHead className="text-right">Actions</TableHead>
                         </TableRow>
                     </TableHeader>
@@ -160,7 +171,7 @@ export function StoresManager({ stores }: StoresManagerProps) {
                         {stores.length === 0 && (
                             <TableRow>
                                 <TableCell
-                                    colSpan={5}
+                                    colSpan={6}
                                     className="py-10 text-center text-sm text-zinc-500 dark:text-zinc-400"
                                 >
                                     Aucune boutique pour le moment.
@@ -184,6 +195,19 @@ export function StoresManager({ stores }: StoresManagerProps) {
 
                                 <TableCell className="text-zinc-500 dark:text-zinc-400">
                                     {store.email || "—"}
+                                </TableCell>
+
+                                <TableCell>
+                                    <Button
+                                        type="button"
+                                        variant="outline"
+                                        size="sm"
+                                        className="gap-1.5"
+                                        onClick={() => copyStoreLink(store)}
+                                    >
+                                        <Copy className="h-3.5 w-3.5" />
+                                        Copier
+                                    </Button>
                                 </TableCell>
 
                                 <TableCell className="text-right">

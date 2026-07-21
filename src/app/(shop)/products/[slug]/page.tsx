@@ -1,9 +1,11 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
-import { MessageCircle } from "lucide-react";
+import { MessageCircle, Store } from "lucide-react";
 
 import { Container, PageHeader } from "@/components/layout";
 import { ProductGallery } from "@/components/shop/ProductGallery";
 import { buttonVariants } from "@/components/ui/button";
+import { ROUTES } from "@/constants/routes";
 import { cn } from "@/lib/utils";
 import { formatPrice } from "@/lib/format";
 import { getProductBySlug } from "@/services/product.service";
@@ -28,7 +30,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
             <PageHeader
                 title={product.name}
                 breadcrumbItems={[
-                    { label: "Produits", href: "/products" },
+                    { label: "Produits", href: ROUTES.PRODUCTS },
+                    { label: product.store.name, href: `${ROUTES.STORES}/${product.store.slug}` },
                     { label: product.name },
                 ]}
             />
@@ -48,6 +51,14 @@ export default async function ProductPage({ params }: ProductPageProps) {
                     <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
                         {product.brand.name} · {product.category.name}
                     </p>
+
+                    <Link
+                        href={`${ROUTES.STORES}/${product.store.slug}`}
+                        className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-teal-500/10 px-3 py-1 text-xs font-medium text-teal-700 transition-colors hover:bg-teal-500/15 dark:bg-teal-500/15 dark:text-teal-400 dark:hover:bg-teal-500/20"
+                    >
+                        <Store className="h-3.5 w-3.5" />
+                        Vendu par {product.store.name}
+                    </Link>
 
                     <div className="mt-3 flex items-center gap-3">
                         <span className="text-2xl font-bold text-teal-600 dark:text-teal-400">

@@ -10,11 +10,16 @@ type SidebarProps = {
     brands: Brand[];
     activeCategory?: string;
     activeBrandId?: string;
+    activeSearch?: string;
     minPrice: number;
     maxPrice: number;
+    basePath?: string;
 };
 
-function buildHref(params: Record<string, string | undefined>) {
+function buildHref(
+    basePath: string,
+    params: Record<string, string | undefined>
+) {
     const search = new URLSearchParams();
 
     Object.entries(params).forEach(([key, value]) => {
@@ -23,7 +28,7 @@ function buildHref(params: Record<string, string | undefined>) {
 
     const query = search.toString();
 
-    return query ? `${ROUTES.PRODUCTS}?${query}` : ROUTES.PRODUCTS;
+    return query ? `${basePath}?${query}` : basePath;
 }
 
 export function Sidebar({
@@ -31,8 +36,10 @@ export function Sidebar({
     brands,
     activeCategory,
     activeBrandId,
+    activeSearch,
     minPrice,
     maxPrice,
+    basePath = ROUTES.PRODUCTS,
 }: SidebarProps) {
     return (
         <aside className="w-full shrink-0 lg:w-64">
@@ -44,7 +51,10 @@ export function Sidebar({
                 <ul className="mt-4 space-y-1">
                     <li>
                         <Link
-                            href={ROUTES.PRODUCTS}
+                            href={buildHref(basePath, {
+                                brand: activeBrandId,
+                                search: activeSearch,
+                            })}
                             className={cn(
                                 "block rounded-lg px-3 py-2 text-sm font-medium transition-colors",
                                 !activeCategory
@@ -62,9 +72,10 @@ export function Sidebar({
                         return (
                             <li key={category.id}>
                                 <Link
-                                    href={buildHref({
+                                    href={buildHref(basePath, {
                                         category: category.slug,
                                         brand: activeBrandId,
+                                        search: activeSearch,
                                     })}
                                     className={cn(
                                         "block rounded-lg px-3 py-2 text-sm font-medium transition-colors",
@@ -81,9 +92,10 @@ export function Sidebar({
                                         {brands.map((brand) => (
                                             <li key={brand.id}>
                                                 <Link
-                                                    href={buildHref({
+                                                    href={buildHref(basePath, {
                                                         category: category.slug,
                                                         brand: brand.id,
+                                                        search: activeSearch,
                                                     })}
                                                     className={cn(
                                                         "block rounded-md px-3 py-1.5 text-sm transition-colors",

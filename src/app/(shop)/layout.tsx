@@ -1,3 +1,5 @@
+import { Suspense } from "react";
+
 import { Topbar, Header, Footer } from "@/components/layout";
 
 export default function ShopLayout({
@@ -8,7 +10,10 @@ export default function ShopLayout({
     return (
         <div className="flex min-h-screen flex-col bg-white dark:bg-zinc-950">
             <Topbar />
-            <Header />
+
+            <Suspense>
+                <Header />
+            </Suspense>
 
             <main className="flex-1">
                 {children}
