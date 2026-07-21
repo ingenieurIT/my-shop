@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { MessageCircle } from "lucide-react";
 
 import { Container, PageHeader } from "@/components/layout";
+import { ProductGallery } from "@/components/shop/ProductGallery";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { formatPrice } from "@/lib/format";
@@ -22,8 +23,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
     if (!product) notFound();
 
-    const image = product.images[0]?.imageUrl ?? FALLBACK_IMAGE;
-
     return (
         <>
             <PageHeader
@@ -35,14 +34,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
             />
 
             <Container className="grid grid-cols-1 gap-10 py-8 lg:grid-cols-2">
-                <div className="relative aspect-4/3 w-full overflow-hidden rounded-xl bg-zinc-100 dark:bg-zinc-800">
-                    {/* eslint-disable-next-line @next/next/no-img-element -- arbitrary admin-pasted URL, not an allowlisted domain */}
-                    <img
-                        src={image}
-                        alt={product.images[0]?.alt || product.name}
-                        className="absolute inset-0 h-full w-full object-cover"
-                    />
-                </div>
+                <ProductGallery
+                    images={product.images}
+                    productName={product.name}
+                    fallbackImage={FALLBACK_IMAGE}
+                />
 
                 <div>
                     <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">
@@ -86,7 +82,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
                     )}
 
                     <a
-                        href={buildWhatsAppLink(product.name, product.price)}
+                        href={buildWhatsAppLink(
+                            product.name,
+                            product.price,
+                            product.store.phone
+                        )}
                         target="_blank"
                         rel="noopener noreferrer"
                         className={cn(

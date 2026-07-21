@@ -1,4 +1,8 @@
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+
 import { Container, PageHeader, Sidebar } from "@/components/layout";
+import { ROUTES } from "@/constants/routes";
 import { getProducts } from "@/services/product.service";
 import { getCategories } from "@/services/category.service";
 import { getBrands } from "@/services/brand.service";
@@ -8,11 +12,13 @@ import { ProductGrid } from "./ProductGrid";
 type ProductCatalogSectionProps = {
     category?: string;
     brand?: string;
+    showViewAll?: boolean;
 };
 
 export async function ProductCatalogSection({
     category,
     brand,
+    showViewAll = false,
 }: ProductCatalogSectionProps) {
     const [allProducts, categories, brands] = await Promise.all([
         getProducts(),
@@ -61,6 +67,16 @@ export async function ProductCatalogSection({
                         <p className="text-sm text-zinc-500 dark:text-zinc-400">
                             {products.length} produit{products.length > 1 ? "s" : ""}
                         </p>
+
+                        {showViewAll && (
+                            <Link
+                                href={ROUTES.PRODUCTS}
+                                className="flex items-center gap-1 text-sm font-medium text-teal-600 transition-colors hover:text-teal-700 dark:text-teal-400 dark:hover:text-teal-300"
+                            >
+                                Voir tout
+                                <ArrowRight className="h-3.5 w-3.5" />
+                            </Link>
+                        )}
                     </div>
 
                     <ProductGrid products={products} />

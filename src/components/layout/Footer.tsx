@@ -41,7 +41,7 @@ export function Footer() {
                         </a>
 
                         <a
-                            href="mailto:contact@linkitdeal.com"
+                            href="mailto:ivantchoumi2@gmail.com"
                             aria-label="Email"
                             className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-zinc-500 transition-colors hover:bg-teal-500/10 hover:text-teal-600 dark:bg-zinc-900 dark:text-zinc-400 dark:hover:bg-teal-500/20 dark:hover:text-teal-400"
                         >
@@ -103,8 +103,22 @@ export function Footer() {
 
                     <ul className="mt-4 space-y-2.5 text-sm text-zinc-500 dark:text-zinc-400">
                         <li>Douala, Cameroun</li>
-                        <li>+237 6XX XXX XXX</li>
-                        <li>contact@linkitdeal.com</li>
+                        <li>
+                            <a
+                                href="tel:+237698178327"
+                                className="transition-colors hover:text-teal-600 dark:hover:text-teal-400"
+                            >
+                                +237 698 178 327
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                href="mailto:ivantchoumi2@gmail.com"
+                                className="transition-colors hover:text-teal-600 dark:hover:text-teal-400"
+                            >
+                                ivantchoumi2@gmail.com
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </Container>

@@ -10,6 +10,10 @@ export default async function ShopHomePage({
     const { category, brand } = await searchParams;
 
     return (
-        <ProductCatalogSection category={category} brand={brand} />
+        <ProductCatalogSection
+            category={category}
+            brand={brand}
+            showViewAll
+        />
     );
 }

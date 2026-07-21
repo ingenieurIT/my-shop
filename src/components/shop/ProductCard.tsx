@@ -67,7 +67,11 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
                 </div>
 
                 <a
-                    href={buildWhatsAppLink(product.name, product.price)}
+                    href={buildWhatsAppLink(
+                        product.name,
+                        product.price,
+                        product.store.phone
+                    )}
                     target="_blank"
                     rel="noopener noreferrer"
                     className={cn(
