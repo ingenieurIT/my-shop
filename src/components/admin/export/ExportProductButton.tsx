@@ -63,7 +63,7 @@ export function ExportProductButton({ product }: ExportProductButtonProps) {
                     toPng(posterRef.current!, {
                         cacheBust: true,
                         pixelRatio: 2,
-                        skipFonts: true,
+                        // skipFonts: true,
                     }),
                     20000
                 );
