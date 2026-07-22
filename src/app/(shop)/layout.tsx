@@ -9,7 +9,7 @@ export default function ShopLayout({
 }>) {
     return (
         <div className="flex min-h-screen flex-col bg-white dark:bg-zinc-950">
-            <Topbar />
+            {/*<Topbar />*/}
 
             <Suspense>
                 <Header />
