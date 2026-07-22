@@ -6,6 +6,9 @@ import { ROUTES } from "@/constants/routes";
 import { getStores } from "@/services/store.service";
 import { getProducts } from "@/services/product.service";
 
+// Reads live data — must never be prerendered at build time (build has no DB access guaranteed).
+export const dynamic = "force-dynamic";
+
 export default async function StoresDirectoryPage() {
     const [stores, products] = await Promise.all([
         getStores(),
