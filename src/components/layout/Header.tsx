@@ -25,6 +25,10 @@ export function Header() {
     const searchParams = useSearchParams();
     const [open, setOpen] = useState(false);
 
+    const searchAction = pathname.startsWith(`${ROUTES.STORES}/`)
+        ? pathname
+        : ROUTES.PRODUCTS;
+
     return (
         <header className="sticky top-0 z-30 border-b border-zinc-100 bg-white dark:border-zinc-800 dark:bg-zinc-950">
             <Container className="flex h-18 items-center gap-4 py-3 sm:h-20">
@@ -62,7 +66,7 @@ export function Header() {
                 </nav>
 
                 <form
-                    action={ROUTES.PRODUCTS}
+                    action={searchAction}
                     className="ml-auto hidden max-w-xs flex-1 items-center sm:flex"
                 >
                     <div className="relative w-full">

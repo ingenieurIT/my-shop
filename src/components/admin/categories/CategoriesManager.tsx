@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import type { Category } from "@prisma/client";
-import { Pencil, Plus, Trash2 } from "lucide-react";
+import { Pencil, Plus, Search, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
 import { slugify } from "@/lib/slug";
@@ -55,6 +55,13 @@ export function CategoriesManager({ categories }: CategoriesManagerProps) {
     const [slugTouched, setSlugTouched] = useState(false);
     const [deleteTarget, setDeleteTarget] = useState<Category | null>(null);
     const [isPending, startTransition] = useTransition();
+    const [search, setSearch] = useState("");
+
+    const filteredCategories = categories.filter((category) =>
+        `${category.name} ${category.slug} ${category.description ?? ""}`
+            .toLowerCase()
+            .includes(search.trim().toLowerCase())
+    );
 
     function openCreate() {
         setEditing(null);
@@ -117,7 +124,18 @@ export function CategoriesManager({ categories }: CategoriesManagerProps) {
 
     return (
         <div>
-            <div className="mb-4 flex justify-end">
+            <div className="mb-4 flex items-center justify-between gap-4">
+                <div className="relative max-w-xs flex-1">
+                    <Search className="pointer-events-none absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400" />
+                    <Input
+                        type="search"
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        placeholder="Rechercher une catégorie..."
+                        className="h-9 pl-8"
+                    />
+                </div>
+
                 <Button
                     type="button"
                     onClick={openCreate}
@@ -140,18 +158,20 @@ export function CategoriesManager({ categories }: CategoriesManagerProps) {
                     </TableHeader>
 
                     <TableBody>
-                        {categories.length === 0 && (
+                        {filteredCategories.length === 0 && (
                             <TableRow>
                                 <TableCell
                                     colSpan={4}
                                     className="py-10 text-center text-sm text-zinc-500 dark:text-zinc-400"
                                 >
-                                    Aucune catégorie pour le moment.
+                                    {search
+                                        ? "Aucune catégorie ne correspond à cette recherche."
+                                        : "Aucune catégorie pour le moment."}
                                 </TableCell>
                             </TableRow>
                         )}
 
-                        {categories.map((category) => (
+                        {filteredCategories.map((category) => (
                             <TableRow key={category.id}>
                                 <TableCell className="font-medium text-zinc-900 dark:text-zinc-50">
                                     {category.name}

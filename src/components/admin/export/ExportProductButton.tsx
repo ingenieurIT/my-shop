@@ -1,14 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState, useTransition } from "react";
-import { toPng } from "html-to-image";
 import { ImageDown } from "lucide-react";
 import { toast } from "sonner";
 
 import type { Product } from "@/types/product";
 import { slugify } from "@/lib/slug";
 import { toDataUrl } from "@/lib/image-proxy";
-import { withTimeout } from "@/lib/with-timeout";
+import { capturePng } from "@/lib/capture";
 import { Button } from "@/components/ui/button";
 import {
     Dialog,
@@ -59,14 +58,7 @@ export function ExportProductButton({ product }: ExportProductButtonProps) {
 
         startTransition(async () => {
             try {
-                const dataUrl = await withTimeout(
-                    toPng(posterRef.current!, {
-                        cacheBust: true,
-                        pixelRatio: 2,
-                        // skipFonts: true,
-                    }),
-                    20000
-                );
+                const dataUrl = await capturePng(posterRef.current!);
 
                 const link = document.createElement("a");
                 link.download = `${slugify(product.name)}.png`;

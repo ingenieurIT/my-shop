@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import type { Store } from "@prisma/client";
-import { Copy, Pencil, Plus, Trash2 } from "lucide-react";
+import { Copy, Pencil, Plus, Search, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
 import { ROUTES } from "@/constants/routes";
@@ -64,6 +64,13 @@ export function StoresManager({ stores }: StoresManagerProps) {
     const [slugTouched, setSlugTouched] = useState(false);
     const [deleteTarget, setDeleteTarget] = useState<Store | null>(null);
     const [isPending, startTransition] = useTransition();
+    const [search, setSearch] = useState("");
+
+    const filteredStores = stores.filter((store) =>
+        `${store.name} ${store.city ?? ""} ${store.phone ?? ""} ${store.email ?? ""}`
+            .toLowerCase()
+            .includes(search.trim().toLowerCase())
+    );
 
     function openCreate() {
         setEditing(null);
@@ -143,7 +150,18 @@ export function StoresManager({ stores }: StoresManagerProps) {
 
     return (
         <div>
-            <div className="mb-4 flex justify-end">
+            <div className="mb-4 flex items-center justify-between gap-4">
+                <div className="relative max-w-xs flex-1">
+                    <Search className="pointer-events-none absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400" />
+                    <Input
+                        type="search"
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        placeholder="Rechercher une boutique..."
+                        className="h-9 pl-8"
+                    />
+                </div>
+
                 <Button
                     type="button"
                     onClick={openCreate}
@@ -168,18 +186,20 @@ export function StoresManager({ stores }: StoresManagerProps) {
                     </TableHeader>
 
                     <TableBody>
-                        {stores.length === 0 && (
+                        {filteredStores.length === 0 && (
                             <TableRow>
                                 <TableCell
                                     colSpan={6}
                                     className="py-10 text-center text-sm text-zinc-500 dark:text-zinc-400"
                                 >
-                                    Aucune boutique pour le moment.
+                                    {search
+                                        ? "Aucune boutique ne correspond à cette recherche."
+                                        : "Aucune boutique pour le moment."}
                                 </TableCell>
                             </TableRow>
                         )}
 
-                        {stores.map((store) => (
+                        {filteredStores.map((store) => (
                             <TableRow key={store.id}>
                                 <TableCell className="font-medium text-zinc-900 dark:text-zinc-50">
                                     {store.name}

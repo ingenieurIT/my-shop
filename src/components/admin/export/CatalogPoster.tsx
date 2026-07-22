@@ -82,11 +82,16 @@ export const CatalogPoster = forwardRef<HTMLDivElement, CatalogPosterProps>(
                                     key={product.id}
                                     className="flex flex-col overflow-hidden rounded-xl border-2 border-zinc-100"
                                 >
-                                    <div className="aspect-square w-full bg-zinc-50">
+                                    <div
+                                        style={{ width: 258, height: 258 }}
+                                        className="bg-zinc-50"
+                                    >
                                         {/* eslint-disable-next-line @next/next/no-img-element -- captured via html-to-image, not rendered by Next */}
                                         <img
                                             src={resolvedImage}
                                             alt={product.name}
+                                            width={258}
+                                            height={258}
                                             className="h-full w-full object-cover"
                                         />
                                     </div>

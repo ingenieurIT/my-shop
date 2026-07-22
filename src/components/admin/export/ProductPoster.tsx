@@ -108,11 +108,16 @@ export const ProductPoster = forwardRef<HTMLDivElement, ProductPosterProps>(
 
                     {/* right: image */}
                     <div className="relative flex items-center justify-center">
-                        <div className="relative aspect-square w-full max-w-[420px] overflow-hidden rounded-3xl border border-zinc-100 shadow-xl">
+                        <div
+                            style={{ width: 420, height: 420 }}
+                            className="relative overflow-hidden rounded-3xl border border-zinc-100 shadow-xl"
+                        >
                             {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img
                                 src={resolvedImage}
                                 alt={product.name}
+                                width={420}
+                                height={420}
                                 className="h-full w-full object-cover"
                             />
                         </div>

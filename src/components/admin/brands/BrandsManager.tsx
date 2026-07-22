@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import type { Brand } from "@prisma/client";
-import { Pencil, Plus, Trash2 } from "lucide-react";
+import { Pencil, Plus, Search, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
 import {
@@ -52,6 +52,13 @@ export function BrandsManager({ brands }: BrandsManagerProps) {
     const [form, setForm] = useState(EMPTY_FORM);
     const [deleteTarget, setDeleteTarget] = useState<Brand | null>(null);
     const [isPending, startTransition] = useTransition();
+    const [search, setSearch] = useState("");
+
+    const filteredBrands = brands.filter((brand) =>
+        `${brand.name} ${brand.website ?? ""}`
+            .toLowerCase()
+            .includes(search.trim().toLowerCase())
+    );
 
     function openCreate() {
         setEditing(null);
@@ -110,7 +117,18 @@ export function BrandsManager({ brands }: BrandsManagerProps) {
 
     return (
         <div>
-            <div className="mb-4 flex justify-end">
+            <div className="mb-4 flex items-center justify-between gap-4">
+                <div className="relative max-w-xs flex-1">
+                    <Search className="pointer-events-none absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400" />
+                    <Input
+                        type="search"
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        placeholder="Rechercher une marque..."
+                        className="h-9 pl-8"
+                    />
+                </div>
+
                 <Button
                     type="button"
                     onClick={openCreate}
@@ -132,18 +150,20 @@ export function BrandsManager({ brands }: BrandsManagerProps) {
                     </TableHeader>
 
                     <TableBody>
-                        {brands.length === 0 && (
+                        {filteredBrands.length === 0 && (
                             <TableRow>
                                 <TableCell
                                     colSpan={3}
                                     className="py-10 text-center text-sm text-zinc-500 dark:text-zinc-400"
                                 >
-                                    Aucune marque pour le moment.
+                                    {search
+                                        ? "Aucune marque ne correspond à cette recherche."
+                                        : "Aucune marque pour le moment."}
                                 </TableCell>
                             </TableRow>
                         )}
 
-                        {brands.map((brand) => (
+                        {filteredBrands.map((brand) => (
                             <TableRow key={brand.id}>
                                 <TableCell className="font-medium text-zinc-900 dark:text-zinc-50">
                                     {brand.name}

@@ -5,7 +5,12 @@ import { getStoreBySlug } from "@/services/store.service";
 
 type StorePageProps = {
     params: Promise<{ slug: string }>;
-    searchParams: Promise<{ category?: string; brand?: string; search?: string }>;
+    searchParams: Promise<{
+        category?: string;
+        brand?: string;
+        search?: string;
+        page?: string;
+    }>;
 };
 
 export default async function StorePage({
@@ -13,7 +18,7 @@ export default async function StorePage({
     searchParams,
 }: StorePageProps) {
     const { slug } = await params;
-    const { category, brand, search } = await searchParams;
+    const { category, brand, search, page } = await searchParams;
 
     const store = await getStoreBySlug(slug);
 
@@ -25,6 +30,7 @@ export default async function StorePage({
             category={category}
             brand={brand}
             search={search}
+            page={page}
         />
     );
 }

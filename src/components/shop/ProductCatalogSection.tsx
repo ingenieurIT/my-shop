@@ -1,7 +1,9 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 
 import { Container, PageHeader, Sidebar } from "@/components/layout";
+import { Pagination } from "@/components/ui/pagination";
 import { ROUTES } from "@/constants/routes";
 import { getProducts } from "@/services/product.service";
 import { getCategories } from "@/services/category.service";
@@ -9,13 +11,15 @@ import { getBrands } from "@/services/brand.service";
 import { getStoreBySlug } from "@/services/store.service";
 
 import { ProductGrid } from "./ProductGrid";
-import Image from "next/image";
+
+const PRODUCTS_PER_PAGE = 12;
 
 type ProductCatalogSectionProps = {
     category?: string;
     brand?: string;
     storeSlug?: string;
     search?: string;
+    page?: string;
     showViewAll?: boolean;
 };
 
@@ -24,6 +28,7 @@ export async function ProductCatalogSection({
     brand,
     storeSlug,
     search,
+    page,
     showViewAll = false,
 }: ProductCatalogSectionProps) {
     const [allProducts, categories, brands, store] = await Promise.all([
@@ -59,6 +64,19 @@ export async function ProductCatalogSection({
 
         return true;
     });
+
+    const totalPages = Math.max(
+        1,
+        Math.ceil(products.length / PRODUCTS_PER_PAGE)
+    );
+    const currentPage = Math.min(
+        Math.max(1, Number(page) || 1),
+        totalPages
+    );
+    const paginatedProducts = products.slice(
+        (currentPage - 1) * PRODUCTS_PER_PAGE,
+        currentPage * PRODUCTS_PER_PAGE
+    );
 
     const activeCategoryLabel = categories.find(
         (item) => item.slug === category
@@ -138,7 +156,14 @@ export async function ProductCatalogSection({
                         )}
                     </div>
 
-                    <ProductGrid products={products} />
+                    <ProductGrid products={paginatedProducts} />
+
+                    <Pagination
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        basePath={basePath}
+                        searchParams={{ category, brand, search }}
+                    />
                 </div>
             </Container>
         </>
