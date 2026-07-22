@@ -1,6 +1,6 @@
-import { Prisma } from "@prisma/client";
+import type { Store as PrismaStore } from "@prisma/client";
 
-export type Store = Prisma.StoreGetPayload<{}>;
+export type Store = PrismaStore;
 
 export interface CreateStoreInput {
     name: string;

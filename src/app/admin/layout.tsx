@@ -1,5 +1,8 @@
 import { Sidebar, Header } from "@/components/layout/admin";
 
+// Admin data must always be fresh (never served from the static build cache).
+export const dynamic = "force-dynamic";
+
 export default function AdminLayout({
                                         children,
                                     }: Readonly<{

@@ -1,6 +1,6 @@
 import { Container, PageHeader } from "@/components/layout";
 import { APP } from "@/constants/app";
-import {BadgeCheck, ShieldCheck} from "lucide-react"; // Si tu utilises lucide-react pour les icônes
+import { BadgeCheck } from "lucide-react";
 
 export default function AboutPage() {
     return (

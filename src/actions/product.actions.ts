@@ -32,6 +32,7 @@ function revalidateProductPaths() {
     revalidatePath("/");
     revalidatePath("/products");
     revalidatePath("/products/[slug]", "page");
+    revalidatePath("/stores");
 }
 
 function cleanList<T extends Record<string, string | undefined>>(

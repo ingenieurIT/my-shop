@@ -2,15 +2,15 @@
 
 import { useState } from "react";
 
-export function useConfirm() {
+export function useConfirm<T = unknown>() {
     const [isOpen, setOpen] =
         useState(false);
 
     const [payload, setPayload] =
-        useState<any>(null);
+        useState<T | null>(null);
 
-    const confirm = (data?: any) => {
-        setPayload(data);
+    const confirm = (data?: T) => {
+        setPayload(data ?? null);
         setOpen(true);
     };
 

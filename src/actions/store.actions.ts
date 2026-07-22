@@ -16,6 +16,7 @@ function revalidateStorePaths() {
     revalidatePath("/admin/stores");
     revalidatePath("/");
     revalidatePath("/products");
+    revalidatePath("/stores");
 }
 
 export async function createStoreAction(input: CreateStoreInput) {

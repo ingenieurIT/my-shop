@@ -1,6 +1,6 @@
-import { Prisma } from "@prisma/client";
+import type { Brand as PrismaBrand } from "@prisma/client";
 
-export type Brand = Prisma.BrandGetPayload<{}>;
+export type Brand = PrismaBrand;
 
 export interface CreateBrandInput {
     name: string;

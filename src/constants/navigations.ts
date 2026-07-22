@@ -16,7 +16,7 @@ type AdminNavigationItem = {
     permission?: string;
 };
 
-export const ADMIN_NAVIGATION = [
+export const ADMIN_NAVIGATION: AdminNavigationItem[] = [
     {
         title: "Dashboard",
 

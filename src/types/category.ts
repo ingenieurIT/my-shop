@@ -1,6 +1,6 @@
-import { Prisma } from "@prisma/client";
+import type { Category as PrismaCategory } from "@prisma/client";
 
-export type Category = Prisma.CategoryGetPayload<{}>;
+export type Category = PrismaCategory;
 
 export interface CreateCategoryInput {
     name: string;
